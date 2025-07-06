@@ -100,6 +100,13 @@ html, body {
   z-index: 1000;
 }
 
+@media (max-width: 768px) {
+  .logo-text {
+    left: 50%;
+    transform: translate(-50%, 50%);
+  }
+}
+
 .invert-colour {
   filter: brightness(0) invert(1);
 }

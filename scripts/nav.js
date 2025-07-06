@@ -1,9 +1,11 @@
 import { logoWrapper, handleMouse } from './main.js';
+import { isMobile } from './utils.js';
 
 let elements = [];
 let nav = null;
 let currentSection = null;
 let collisionsEnabled = true;
+let djs = null;
 
 export const loadNav = async () => {
   const content = document.getElementById('content');
@@ -15,11 +17,17 @@ export const loadNav = async () => {
 
     nav = document.getElementById('nav');
 
+    document.querySelectorAll('.dj-container .card').forEach((card) => {
+      card.addEventListener('click', () => {
+        card.classList.toggle('flipped');
+      });
+    });
+
     const links = [
-      { name: 'Music', corner: { left: '10%', top: '10%' }, rotate: 'rotate(-15deg)' },
-      { name: 'DJs', corner: { left: '90%', top: '10%' }, rotate: 'rotate(60deg)' },
-      { name: 'Community', corner: { left: '10%', top: '85%' }, rotate: 'rotate(0deg)' },,
-      { name: 'Art', corner: { left: '90%', top: '85%' }, rotate: 'rotate(90deg)' },
+      { name: 'Music', corner: { left: isMobile ? '15%' : '10%', top: '10%' }, rotate: 'rotate(-15deg)' },
+      { name: 'DJs', corner: { left: isMobile ? '85%' : '90%', top: '10%' }, rotate: 'rotate(60deg)' },
+      { name: 'Community', corner: { left: isMobile ? '15%' : '10%', top: '85%' }, rotate: 'rotate(0deg)' },,
+      { name: 'Art', corner: { left: isMobile ? '85%' : '90%', top: '85%' }, rotate: 'rotate(90deg)' },
     ];
 
     links.forEach((link) => {
