@@ -78,7 +78,7 @@ export const setGreyScale = (scale) => {
 export const passPortal = () => {
   currentBackgroundIndex =
     (currentBackgroundIndex + 1) % backgroundElements.length;
-  showBackground();
+  portalsPassed >= gameLevels ? showBackground(true) : showBackground();
   setGreyScale(currentGreyScale / 2);
 
   if (portalsPassed >= gameLevels) {
@@ -137,7 +137,7 @@ const resetGame = () => {
   lastDistance = null;
   currentBackgroundIndex = 0;
   
-  document.body.style.backgroundImage = `url('${backgroundImages[currentBackgroundIndex]}')`;
+  showBackground();
   setGreyScale(1);
   
   grey.style.transition = 'none';
@@ -160,7 +160,8 @@ const resetGame = () => {
   moveInterval = setInterval(moveGrey, 50);
 };
 
-const showBackground = () => {
+const showBackground = (setOriginal) => {
+  if (setOriginal) currentBackgroundIndex = 0;
   backgroundElements.forEach((el, i) => {
     el.classList.toggle('active', i === currentBackgroundIndex);
   });
