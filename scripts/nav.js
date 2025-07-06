@@ -16,10 +16,10 @@ export const loadNav = async () => {
     nav = document.getElementById('nav');
 
     const links = [
-      { name: 'Music', corner: { left: '5%', top: '5%' }, rotate: 'rotate(-15deg)' },
-      { name: 'DJs', corner: { left: '85%', top: '5%' }, rotate: 'rotate(60deg)' },
-      { name: 'Community', corner: { left: '5%', top: '80%' }, rotate: 'rotate(0deg)' },,
-      { name: 'Art', corner: { left: '85%', top: '80%' }, rotate: 'rotate(90deg)' },
+      { name: 'Music', corner: { left: '10%', top: '10%' }, rotate: 'rotate(-15deg)' },
+      { name: 'DJs', corner: { left: '90%', top: '10%' }, rotate: 'rotate(60deg)' },
+      { name: 'Community', corner: { left: '10%', top: '85%' }, rotate: 'rotate(0deg)' },,
+      { name: 'Art', corner: { left: '90%', top: '85%' }, rotate: 'rotate(90deg)' },
     ];
 
     links.forEach((link) => {

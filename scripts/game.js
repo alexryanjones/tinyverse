@@ -141,8 +141,8 @@ const resetGame = () => {
   setGreyScale(1);
   
   grey.style.transition = 'none';
-  grey.style.left = `0px`;
-  grey.style.top = `0px`;
+  grey.style.left = `100%`;
+  grey.style.top = `100%`;
   grey.style.opacity = '1';
   grey.style.transform = 'translate(-50%, -50%) scale(1)';
   

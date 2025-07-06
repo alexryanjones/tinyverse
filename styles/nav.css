@@ -82,8 +82,10 @@
 }
 
 .dj-container img {
-  width: 150px;
-  height: 225px;
+  width: 20vw;
+  max-width: 225px;
+  height: auto;
+  max-height: 300px;
   object-fit: cover;
   border-radius: 5px;
   border: 1px solid white;
