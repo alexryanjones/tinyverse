@@ -1,4 +1,6 @@
-* {
+@font-face {
+  font-family: 'Tinyverse';
+  src: url('/assets/fonts/THEJOURNALFONT.otf') format('opentype');
   cursor: none !important;
 }
 
@@ -7,11 +9,12 @@ html, body {
   width: 100%;
   margin: 0;
   padding: 0;
+  font-family: 'Tinyverse', sans-serif;
 }
 
 body {
   overflow: hidden;
-  background-image: url('/assets/bg-water.jpeg');
+  background-image: url('/assets/images/backgrounds/bg-water.jpeg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -24,6 +27,7 @@ body {
   width: 75px;
   height: 75px;
   pointer-events: none;
+  z-index: 1000;
 }
 
 #logo {
@@ -35,52 +39,43 @@ body {
   animation: bounce 1s ease-in-out infinite, rotate 10s linear infinite;
 }
 
+#content {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 .portal {
   position: absolute;
   width: 100px;
   height: 100px;
-  border-radius: 50%;
-  border: 2px dashed white;
   pointer-events: none;
-  z-index: 999;
+  z-index: 1001;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: sans-serif;
   color: white;
-  font-size: 1rem;
-  text-align: center;
   transition: opacity 0.5s ease;
 }
 
-.portal-dot {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 6px;
-  height: 6px;
-  margin: -3px 0 0 -3px;
-  border-radius: 50%;
-  background: red;
-  box-shadow: 0 0 10px red;
-  animation: orbit 0.8s linear infinite, colorCycle 4s linear infinite;
-  will-change: transform;
+.portal-img {
+  width: 100%;
+  height: auto;
 }
 
-.portal-dot::after {
-  content: '';
+.portal::after {
+  content: attr(data-label);
   position: absolute;
-  width: 300%;
-  height: 300%;
-  top: -100%;
-  left: -100%;
-  border-radius: 50%;
-  background: inherit;
-  opacity: 1;
-  filter: blur(12px);
-  animation: fadeTrail 1.2s ease-out infinite;
+  top: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.9rem;
+  color: white;
+  text-shadow: 0 0 5px rgba(0,0,0,0.7);
   pointer-events: none;
-  z-index: -1;
+}
+
+.sparkle {
+  margin-left: 6px;
+  margin-top: 6px;
 }
 
 .logo-text {

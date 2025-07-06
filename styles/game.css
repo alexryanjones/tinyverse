@@ -1,7 +1,7 @@
 #grey {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 100%;
+  left: 100%;
   transform: translate(-50%, -50%);
   width: 150px;
   height: auto;

@@ -6,10 +6,10 @@ const maxScale = 4;
 const greyScaleModifier = isMobile ? 0.5 : 1;
 
 const backgroundImages = [
-  'assets/bg-frozen.jpg',
-  'assets/bg-space.jpeg',
-  'assets/bg-jungle.jpg',
-  'assets/bg-water.jpeg',
+  'assets/images/backgrounds/bg-frozen.jpg',
+  'assets/images/backgrounds/bg-space.jpeg',
+  'assets/images/backgrounds/bg-jungle.jpg',
+  'assets/images/backgrounds/bg-water.jpeg',
 ];
 
 let currentPortal = null;
@@ -29,20 +29,35 @@ export let gamePassed = false;
 export const createPortal = () => {
   if (currentPortal) currentPortal.remove();
 
-  const portal = document.createElement('div');
-  portal.classList.add('portal');
+  const sparkleContainer = document.createElement('div');
+  const sparkle = document.createElement('img');
+  sparkle.src = 'assets/images/portal-spark.gif';
+  sparkleContainer.classList.add('portal');
+  sparkle.classList.add('sparkle');
+  sparkleContainer.appendChild(sparkle);
 
   const maxX = window.innerWidth - portalSize;
   const maxY = window.innerHeight - portalSize;
-  portal.style.left = `${Math.floor(Math.random() * maxX)}px`;
-  portal.style.top = `${Math.floor(Math.random() * maxY)}px`;
+  sparkleContainer.style.left = `${Math.floor(Math.random() * maxX)}px`;
+  sparkleContainer.style.top = `${Math.floor(Math.random() * maxY)}px`;
 
-  const dot = document.createElement('div');
-  dot.classList.add('portal-dot');
-  portal.appendChild(dot);
-  game.appendChild(portal);
+  game.appendChild(sparkleContainer);
+  currentPortal = sparkleContainer;
 
-  currentPortal = portal;
+  const swapToRealPortal = () => {
+    const portal = document.createElement('img');
+    portal.src = 'assets/images/portal.gif';
+    portal.classList.add('portal');
+    portal.style.left = sparkleContainer.style.left;
+    portal.style.top = sparkleContainer.style.top;
+
+    game.replaceChild(portal, sparkleContainer);
+    currentPortal = portal;
+  };
+
+  sparkle.onload = () => {
+    setTimeout(swapToRealPortal, 500);
+  };
 };
 
 export const checkPortalCollision = (event) => {

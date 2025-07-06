@@ -1,14 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tinyverse Nav</title>
-  <link rel="stylesheet" href="styles/nav.css">
-</head>
-<body>
-  <div id="music" class="portal">music...</div>
-  <div id="djs" class="portal">djs</div>
-  <div id="community" class="portal">community</div>
-</body>
-</html>
+<div id="nav">
+
+  <div id="music" class="section">
+    <iframe width="100%"
+      height="400"
+      scrolling="no"
+      frameborder="no"
+      allow="autoplay"
+      src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/2047217058&color=%23140906&auto_play=false&hide_related=false&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+    </iframe>
+  </div>
+
+  <div id="djs" class="section">
+    <div class="dj-container">
+      <img src="/assets/images/djs/ntaj.jpg" />
+      NTAJ
+    </div>
+
+    <div class="dj-container">
+      <img src="/assets/images/djs/chadi.jpg" />
+      Chadi
+    </div>
+
+    <div class="dj-container">
+      <img src="/assets/images/djs/simplykat.jpg" />
+      Simply Kat
+    </div>
+  </div>
+
+  <div id="art" class="section">
+    <img src="/assets/images/posters/01.jpg" />
+  </div>
+
+  <div id="community" class="section" onclick="window.open('https://chat.whatsapp.com/B5a6sjNGI5o8SM5Wezgn5r?mode=ac_c', '_blank')">
+    <div class="qr-container">
+      <img src="/assets/images/qr.jpeg" alt="whatsapp-qr">
+    </div>
+    <p>Click or scan to join the Tinyverse Whatsapp community.</p>
+    <p> Find info on upcoming events and more.</p>
+  </div>
+
+</div>
