@@ -1,16 +1,10 @@
 import { logoWrapper, handleMouse, latestMousePos } from './main.js';
 import { isMobile, portalSize } from './utils.js';
 
-const gameLevels = 4;
+const gameLevels = 3;
 const maxScale = 4;
 const greyScaleModifier = isMobile ? 0.5 : 1;
 
-const backgroundImages = [
-  'assets/images/backgrounds/bg-frozen.jpg',
-  'assets/images/backgrounds/bg-space.jpeg',
-  'assets/images/backgrounds/bg-jungle.jpg',
-  'assets/images/backgrounds/bg-water.jpeg',
-];
 
 let currentPortal = null;
 let currentGreyScale = 1;
@@ -23,6 +17,7 @@ let greyActive = true;
 let game = null;
 let grey = null;
 let gameOver = null;
+let backgroundElements = null;
 
 export let gamePassed = false;
 
@@ -82,8 +77,8 @@ export const setGreyScale = (scale) => {
 
 export const passPortal = () => {
   currentBackgroundIndex =
-    (currentBackgroundIndex + 1) % backgroundImages.length;
-  document.body.style.backgroundImage = `url('${backgroundImages[currentBackgroundIndex]}')`;
+    (currentBackgroundIndex + 1) % backgroundElements.length;
+  showBackground();
   setGreyScale(currentGreyScale / 2);
 
   if (portalsPassed >= gameLevels) {
@@ -165,6 +160,12 @@ const resetGame = () => {
   moveInterval = setInterval(moveGrey, 50);
 };
 
+const showBackground = () => {
+  backgroundElements.forEach((el, i) => {
+    el.classList.toggle('active', i === currentBackgroundIndex);
+  });
+};
+
 export const startGame = async () => {
   const content = document.getElementById('content');
   try {
@@ -173,6 +174,8 @@ export const startGame = async () => {
     content.innerHTML = html;
     game = document.getElementById('game');
     grey = document.getElementById('grey');
+    backgroundElements = document.querySelectorAll('#backgrounds .bg');
+    showBackground();
     gameOver = document.getElementById('game-over');
     gameOver.addEventListener('click', resetGame);
   } catch (err) {

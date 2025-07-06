@@ -6,10 +6,9 @@ let currentSection = null;
 let collisionsEnabled = true;
 
 export const loadNav = async () => {
-
   const content = document.getElementById('content');
+  
   try {
-    document.body.style.backgroundImage = `url('assets/images/backgrounds/bg-water.jpeg')`;
     const res = await fetch('nav.html');
     const html = await res.text();
     content.innerHTML = html;
