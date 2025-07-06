@@ -1,0 +1,132 @@
+* {
+  cursor: none !important;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow: hidden;
+  background-image: url('/assets/bg-water.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#logo-wrapper {
+  position: absolute;
+  transform-origin: center;
+  transform: translate(-50%, -50%);
+  width: 75px;
+  height: 75px;
+  pointer-events: none;
+}
+
+#logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 1000;
+  animation: bounce 1s ease-in-out infinite, rotate 10s linear infinite;
+}
+
+.portal {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px dashed white;
+  pointer-events: none;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  color: white;
+  font-size: 1rem;
+  text-align: center;
+  transition: opacity 0.5s ease;
+}
+
+.portal-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: red;
+  box-shadow: 0 0 10px red;
+  animation: orbit 0.8s linear infinite, colorCycle 4s linear infinite;
+  will-change: transform;
+}
+
+.portal-dot::after {
+  content: '';
+  position: absolute;
+  width: 300%;
+  height: 300%;
+  top: -100%;
+  left: -100%;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 1;
+  filter: blur(12px);
+  animation: fadeTrail 1.2s ease-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.logo-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 75px;
+  height: auto;
+  z-index: 1000;
+}
+
+.invert-colour {
+  filter: brightness(0) invert(1);
+}
+
+@keyframes bounce {
+  0%, 100% {
+    margin-top: -10px;
+  }
+  50% {
+    margin-top: 10px;
+  }
+}
+
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg) translateX(50px);
+  }
+  100% {
+    transform: rotate(360deg) translateX(50px);
+  }
+}
+
+@keyframes colorCycle {
+  0%   { background: #d4e4ff; box-shadow: 0 0 12px #d4e4ff; }  /* pale blue */
+  14%  { background: #e0ccff; box-shadow: 0 0 12px #e0ccff; }  /* soft violet */
+  28%  { background: #ffffff; box-shadow: 0 0 12px #ffffff; }  /* white */
+  42%  { background: #cceeff; box-shadow: 0 0 12px #cceeff; }  /* icy cyan */
+  57%  { background: #ccd9ff; box-shadow: 0 0 12px #ccd9ff; }  /* soft indigo */
+  71%  { background: #e6f0ff; box-shadow: 0 0 12px #e6f0ff; }  /* very light blue */
+  85%  { background: #f2f7ff; box-shadow: 0 0 12px #f2f7ff; }  /* bluish white */
+  100% { background: #d4e4ff; box-shadow: 0 0 12px #d4e4ff; }
+}
+
+@keyframes fadeTrail {
+  0%   { opacity: 1; transform: scale(1); }
+  50%  { opacity: 0.6; transform: scale(1.2); }
+  100% { opacity: 0; transform: scale(1.6); }
+}
