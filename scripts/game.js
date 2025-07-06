@@ -13,6 +13,7 @@ let currentBackgroundIndex = 0;
 let portalsPassed = 0;
 let moveInterval;
 let greyActive = true;
+let isGameOver = false;
 
 let game = null;
 let grey = null;
@@ -76,6 +77,7 @@ export const setGreyScale = (scale) => {
 };
 
 export const passPortal = () => {
+  if (isGameOver) return;
   currentBackgroundIndex =
     (currentBackgroundIndex + 1) % backgroundElements.length;
   portalsPassed >= gameLevels ? showBackground(true) : showBackground();
@@ -126,6 +128,7 @@ export const checkGreyCollision = () => {
     greyRect.top > logoRect.bottom
   );
   if (overlap) {
+    isGameOver = true;
     gameOver.classList.add('show');
     clearInterval(moveInterval);
   }
@@ -136,6 +139,7 @@ const resetGame = () => {
   currentGreyScale = 1;
   lastDistance = null;
   currentBackgroundIndex = 0;
+  isGameOver = false;
   
   showBackground();
   setGreyScale(1);
