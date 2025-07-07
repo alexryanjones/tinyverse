@@ -73,9 +73,9 @@ export const loadNav = async () => {
     
     // Set scout to resting position
     logoWrapper.style.transition = 'top 0.3s ease-in, left 0.3s ease-out';
-    logoWrapper.style.transform = 'translate(-50%, 0)';
+    logoWrapper.style.transform = 'translate(-50%, -50%)';
     logoWrapper.style.zIndex = '1002';
-    moveScout(restingX, restingY, latestMousePos.x);
+    moveScout(restingX, restingY, latestMousePos.x, true);
   } catch (err) {
     console.error('Failed to load nav.html:', err);
     content.innerHTML = '<p>Error loading nav view.</p>';
@@ -95,7 +95,7 @@ const handleSectionDisplay = (section) => {
 const animateScoutToPortal = (target) => {
   const rect = target.getBoundingClientRect();
   const centerX = rect.left + rect.width / 2;
-  const centerY = rect.top + rect.height / 2 - 30;
+  const centerY = rect.top + rect.height / 2;
   const currentX = logoWrapper.getBoundingClientRect().left + logoWrapper.offsetWidth / 2;
 
   moveScout(centerX, centerY, currentX);
@@ -130,7 +130,7 @@ const animateScoutToPortal = (target) => {
     }
 
     setTimeout(() => {
-      moveScout(restingX, restingY, restingX);
+      moveScout(restingX, restingY, centerX, true);
     }, 300);
   }, 300);
 };
