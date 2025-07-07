@@ -1,11 +1,12 @@
-import { logoWrapper, handleMouse } from './main.js';
+import { logoWrapper, moveScout } from './main.js';
 import { isMobile } from './utils.js';
 
 let elements = [];
 let nav = null;
 let currentSection = null;
-let collisionsEnabled = true;
-let djs = null;
+
+const restingX = window.innerWidth * 0.5;
+const restingY = isMobile ? window.innerHeight * 0.8 : window.innerHeight * 0.85;
 
 export const loadNav = async () => {
   const content = document.getElementById('content');
@@ -45,11 +46,14 @@ export const loadNav = async () => {
 
       const swapToRealPortal = () => {
         if (!sparkleContainer.parentNode) return;
+
         const portalWrapper = document.createElement('div');
         portalWrapper.classList.add('portal');
         portalWrapper.setAttribute('data-label', link.name);
         portalWrapper.style.left = sparkleContainer.style.left;
         portalWrapper.style.top = sparkleContainer.style.top;
+        portalWrapper.style.pointerEvents = 'auto';
+        portalWrapper.addEventListener('click', () => animateScoutToPortal(portalWrapper));
         
         const portalImg = document.createElement('img');
         portalImg.classList.add('portal-img');
@@ -67,69 +71,17 @@ export const loadNav = async () => {
       };
     });
     
-    handleMouse(checkNavCollision);
+    // Set scout to resting position
+    logoWrapper.style.transition = 'top 0.3s ease-in, left 0.3s ease-out';
+    logoWrapper.style.transform = 'translate(-50%, 0)';
+    logoWrapper.style.zIndex = '1002';
+    moveScout(restingX, restingY);
   } catch (err) {
-    console.error('Failed to load game.html:', err);
-    content.innerHTML = '<p>Error loading game view.</p>';
+    console.error('Failed to load nav.html:', err);
+    content.innerHTML = '<p>Error loading nav view.</p>';
     return;
   }
 
-};
-
-export const checkNavCollision = () => {
-  if (!collisionsEnabled) return;
-  const logoRect = logoWrapper.getBoundingClientRect();
-
-  elements.forEach((element) => {
-    const rect = element.getBoundingClientRect();
-    const overlap = !(
-      rect.right < logoRect.left ||
-      rect.left > logoRect.right ||
-      rect.bottom < logoRect.top ||
-      rect.top > logoRect.bottom
-    );
-
-    if (overlap) {
-      collisionsEnabled = false; 
-      const label = element.getAttribute('data-label');
-      if (label === 'Back') {
-        const original = element.getAttribute('data-original-label');
-        if (original) {
-          element.setAttribute('data-label', original);
-          element.removeAttribute('data-original-label');
-        }
-
-        elements.forEach((el) => {
-          el.style.display = '';
-        });
-
-        if (currentSection) {
-          const sectionId = currentSection.toLowerCase();
-          const sectionEl = document.getElementById(sectionId);
-          if (sectionEl) {
-            sectionEl.style.display = 'none';
-          }
-        }
-
-        currentSection = null;
-      } else {
-        currentSection = label;
-        element.setAttribute('data-original-label', label);
-        element.setAttribute('data-label', 'Back');
-
-        elements.forEach((el) => {
-          if (el !== element) el.style.display = 'none';
-        });
-
-        handleSectionDisplay(label);
-      }
-
-      setTimeout(() => {
-        collisionsEnabled = true;
-      }, 750);
-
-    }
-  });
 };
 
 const handleSectionDisplay = (section) => {
@@ -138,4 +90,46 @@ const handleSectionDisplay = (section) => {
   if (sectionEl) {
     sectionEl.style.display = 'flex';
   }
+};
+
+const animateScoutToPortal = (target) => {
+  const rect = target.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2 - 30;
+
+  moveScout(centerX, centerY);
+
+  setTimeout(() => {
+    const label = target.getAttribute('data-label');
+
+    if (label === 'Back') {
+      const original = target.getAttribute('data-original-label');
+      if (original) {
+        target.setAttribute('data-label', original);
+        target.removeAttribute('data-original-label');
+      }
+
+      elements.forEach((el) => (el.style.display = ''));
+      if (currentSection) {
+        const el = document.getElementById(currentSection.toLowerCase());
+        if (el) el.style.display = 'none';
+      }
+
+      currentSection = null;
+    } else {
+      currentSection = label;
+      target.setAttribute('data-original-label', label);
+      target.setAttribute('data-label', 'Back');
+
+      elements.forEach((el) => {
+        if (el !== target) el.style.display = 'none';
+      });
+
+      handleSectionDisplay(label);
+    }
+
+    setTimeout(() => {
+      moveScout(restingX, restingY);
+    }, 300);
+  }, 300);
 };

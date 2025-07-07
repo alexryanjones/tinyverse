@@ -1,10 +1,9 @@
-import { logoWrapper, handleMouse, latestMousePos } from './main.js';
+import { logoWrapper, moveScout } from './main.js';
 import { isMobile, portalSize } from './utils.js';
 
 const gameLevels = 3;
 const maxScale = 4;
 const greyScaleModifier = isMobile ? 0.5 : 1;
-
 
 let currentPortal = null;
 let currentGreyScale = 1;
@@ -20,7 +19,69 @@ let grey = null;
 let gameOver = null;
 let backgroundElements = null;
 
-export let gamePassed = false;
+let lastMouseX = null;
+let mouseMoveTimeout;
+let latestMousePos = {
+  x: window.innerWidth / 2,
+  y: window.innerHeight / 2,
+};
+
+let mouseMoveListener = null;
+let touchMoveListener = null;
+
+export const updateCursor = (event) => {
+  const mouseX = event.clientX;
+  const mouseY = event.clientY;
+  latestMousePos = { x: mouseX, y: mouseY };
+
+  if (lastMouseX !== null) {
+    if (mouseX > lastMouseX) {
+      logoWrapper.style.transform = 'translate(-50%, -50%) scaleX(-1)';
+      logo.style.transform = 'rotate(-15deg)';
+    } else if (mouseX < lastMouseX) {
+      logoWrapper.style.transform = 'translate(-50%, -50%) scaleX(1)';
+      logo.style.transform = 'rotate(-15deg)';
+    }
+  }
+
+  moveScout(mouseX, mouseY);
+
+  lastMouseX = mouseX;
+  clearTimeout(mouseMoveTimeout);
+  mouseMoveTimeout = setTimeout(() => {
+    logo.style.transform = 'rotate(0deg)';
+  }, 100);
+};
+
+
+export const handleMouse = (callback) => {
+  mouseMoveListener = (e) => {
+    updateCursor(e);
+    callback(e);
+  };
+  touchMoveListener = (e) => {
+    const touch = e.touches[0];
+    if (touch) {
+      const touchEvent = { clientX: touch.clientX, clientY: touch.clientY };
+      updateCursor(touchEvent);
+      callback(touchEvent);
+    }
+  };
+
+  document.addEventListener('mousemove', mouseMoveListener);
+  document.addEventListener('touchmove', touchMoveListener);
+};
+
+const removeMouseHandlers = () => {
+  if (mouseMoveListener) {
+    document.removeEventListener('mousemove', mouseMoveListener);
+    mouseMoveListener = null;
+  }
+  if (touchMoveListener) {
+    document.removeEventListener('touchmove', touchMoveListener);
+    touchMoveListener = null;
+  }
+};
 
 export const createPortal = () => {
   if (currentPortal) currentPortal.remove();
@@ -86,6 +147,7 @@ export const passPortal = () => {
   if (portalsPassed >= gameLevels) {
     const gameWonEvent = new CustomEvent('gameWon');
     document.dispatchEvent(gameWonEvent);
+    removeMouseHandlers();
   } else {
     portalsPassed++;
     createPortal();
@@ -181,6 +243,7 @@ export const startGame = async () => {
     grey = document.getElementById('grey');
     backgroundElements = document.querySelectorAll('#backgrounds .bg');
     showBackground();
+    moveScout(window.innerWidth / 2, window.innerHeight / 2);
     gameOver = document.getElementById('game-over');
     gameOver.addEventListener('click', resetGame);
   } catch (err) {
