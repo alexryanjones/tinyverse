@@ -1,5 +1,5 @@
-import { logoWrapper, moveScout } from './main.js';
-import { isMobile, portalSize } from './utils.js';
+import { logoWrapper } from './main.js';
+import { isMobile, portalSize, latestMousePos, moveScout } from './utils.js';
 
 const gameLevels = 3;
 const maxScale = 4;
@@ -21,10 +21,6 @@ let backgroundElements = null;
 
 let lastMouseX = null;
 let mouseMoveTimeout;
-let latestMousePos = {
-  x: window.innerWidth / 2,
-  y: window.innerHeight / 2,
-};
 
 let mouseMoveListener = null;
 let touchMoveListener = null;
@@ -32,19 +28,8 @@ let touchMoveListener = null;
 export const updateCursor = (event) => {
   const mouseX = event.clientX;
   const mouseY = event.clientY;
-  latestMousePos = { x: mouseX, y: mouseY };
-
-  if (lastMouseX !== null) {
-    if (mouseX > lastMouseX) {
-      logoWrapper.style.transform = 'translate(-50%, -50%) scaleX(-1)';
-      logo.style.transform = 'rotate(-15deg)';
-    } else if (mouseX < lastMouseX) {
-      logoWrapper.style.transform = 'translate(-50%, -50%) scaleX(1)';
-      logo.style.transform = 'rotate(-15deg)';
-    }
-  }
-
-  moveScout(mouseX, mouseY);
+  
+  moveScout(mouseX, mouseY, lastMouseX);
 
   lastMouseX = mouseX;
   clearTimeout(mouseMoveTimeout);
@@ -183,6 +168,7 @@ export const checkGreyCollision = () => {
   if (!grey || !logoWrapper) return;
   const greyRect = grey.getBoundingClientRect();
   const logoRect = logoWrapper.getBoundingClientRect();
+
   const overlap = !(
     greyRect.right < logoRect.left ||
     greyRect.left > logoRect.right ||
@@ -243,7 +229,11 @@ export const startGame = async () => {
     grey = document.getElementById('grey');
     backgroundElements = document.querySelectorAll('#backgrounds .bg');
     showBackground();
-    moveScout(window.innerWidth / 2, window.innerHeight / 2);
+    moveScout(
+      window.innerWidth / 2,
+      window.innerHeight / 2,
+      window.innerWidth / 2
+    );
     gameOver = document.getElementById('game-over');
     gameOver.addEventListener('click', resetGame);
   } catch (err) {

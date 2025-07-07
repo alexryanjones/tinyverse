@@ -1,5 +1,5 @@
-import { logoWrapper, moveScout } from './main.js';
-import { isMobile } from './utils.js';
+import { logoWrapper } from './main.js';
+import { isMobile, latestMousePos, moveScout } from './utils.js';
 
 let elements = [];
 let nav = null;
@@ -75,7 +75,7 @@ export const loadNav = async () => {
     logoWrapper.style.transition = 'top 0.3s ease-in, left 0.3s ease-out';
     logoWrapper.style.transform = 'translate(-50%, 0)';
     logoWrapper.style.zIndex = '1002';
-    moveScout(restingX, restingY);
+    moveScout(restingX, restingY, latestMousePos.x);
   } catch (err) {
     console.error('Failed to load nav.html:', err);
     content.innerHTML = '<p>Error loading nav view.</p>';
@@ -96,8 +96,9 @@ const animateScoutToPortal = (target) => {
   const rect = target.getBoundingClientRect();
   const centerX = rect.left + rect.width / 2;
   const centerY = rect.top + rect.height / 2 - 30;
+  const currentX = logoWrapper.getBoundingClientRect().left + logoWrapper.offsetWidth / 2;
 
-  moveScout(centerX, centerY);
+  moveScout(centerX, centerY, currentX);
 
   setTimeout(() => {
     const label = target.getAttribute('data-label');
@@ -129,7 +130,7 @@ const animateScoutToPortal = (target) => {
     }
 
     setTimeout(() => {
-      moveScout(restingX, restingY);
+      moveScout(restingX, restingY, restingX);
     }, 300);
   }, 300);
 };
