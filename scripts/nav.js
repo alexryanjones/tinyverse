@@ -6,7 +6,7 @@ let nav = null;
 let currentSection = null;
 
 const restingX = window.innerWidth * 0.5;
-const restingY = isMobile ? window.innerHeight * 0.8 : window.innerHeight * 0.85;
+const restingY = window.innerHeight * 0.85;
 
 export const loadNav = async () => {
   const content = document.getElementById('content');
