@@ -140,19 +140,19 @@
   }
 
   .dj-container:first-of-type {
-    transform: translate(40px, -27vh);
+    transform: translate(40px, -20vh);
   }
 
   .dj-container:first-of-type:hover {
-    transform: translate(40px, -27vh) scale(1.05);
+    transform: translate(40px, -20vh) scale(1.05);
   }
   
   .dj-container:last-of-type {
-    transform: translate(-40px, 27vh);
+    transform: translate(-40px, 20vh);
   }
 
   .dj-container:last-of-type:hover {
-    transform: translate(-40px, 27vh) scale(1.05);
+    transform: translate(-40px, 20vh) scale(1.05);
   }
 }
 
