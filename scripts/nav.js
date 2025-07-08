@@ -27,10 +27,10 @@ export const loadNav = async () => {
     });
 
     const links = [
-      { name: 'Music', corner: { left: isMobile ? '25%' : '10%', top: isMobile ? '25%' : '10%' }, rotate: 'rotate(-15deg)' },
-      { name: 'DJs', corner: { left: isMobile ? '75%' : '90%', top: isMobile ? '25%' : '10%' }, rotate: 'rotate(60deg)' },
-      { name: 'Community', corner: { left: isMobile ? '25%' : '10%', top: isMobile ? '75%' : '85%' }, rotate: 'rotate(0deg)' },,
-      { name: 'Art', corner: { left: isMobile ? '75%' : '90%', top: isMobile ? '75%' : '85%' }, rotate: 'rotate(90deg)' },
+      { name: 'Music', corner: { left: isMobile ? '20%' : '10%', top: '10%' }, rotate: 'rotate(-15deg)' },
+      { name: 'DJs', corner: { left: isMobile ? '80%' : '90%', top: '10%' }, rotate: 'rotate(60deg)' },
+      { name: 'Community', corner: { left: isMobile ? '20%' : '10%', top: '85%' }, rotate: 'rotate(0deg)' },,
+      { name: 'Art', corner: { left: isMobile ? '80%' : '90%', top: '85%' }, rotate: 'rotate(90deg)' },
     ];
 
     links.forEach((link) => {
