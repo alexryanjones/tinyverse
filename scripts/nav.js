@@ -8,6 +8,8 @@ let currentSection = null;
 const restingX = window.innerWidth * 0.5;
 const restingY = window.innerHeight * 0.85;
 
+console.log(isMobile);
+
 export const loadNav = async () => {
   const content = document.getElementById('content');
   
@@ -25,10 +27,10 @@ export const loadNav = async () => {
     });
 
     const links = [
-      { name: 'Music', corner: { left: isMobile ? '25%' : '10%', top: '10%' }, rotate: 'rotate(-15deg)' },
-      { name: 'DJs', corner: { left: isMobile ? '75%' : '90%', top: '10%' }, rotate: 'rotate(60deg)' },
-      { name: 'Community', corner: { left: isMobile ? '25%' : '10%', top: '85%' }, rotate: 'rotate(0deg)' },,
-      { name: 'Art', corner: { left: isMobile ? '75%' : '90%', top: '85%' }, rotate: 'rotate(90deg)' },
+      { name: 'Music', corner: { left: isMobile ? '25%' : '10%', top: isMobile ? '25%' : '10%' }, rotate: 'rotate(-15deg)' },
+      { name: 'DJs', corner: { left: isMobile ? '75%' : '90%', top: isMobile ? '25%' : '10%' }, rotate: 'rotate(60deg)' },
+      { name: 'Community', corner: { left: isMobile ? '25%' : '10%', top: isMobile ? '75%' : '85%' }, rotate: 'rotate(0deg)' },,
+      { name: 'Art', corner: { left: isMobile ? '75%' : '90%', top: isMobile ? '75%' : '85%' }, rotate: 'rotate(90deg)' },
     ];
 
     links.forEach((link) => {
