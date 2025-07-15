@@ -1,5 +1,11 @@
-import { logoWrapper } from './main.js';
-import { isMobile, portalSize, latestMousePos, moveScout } from './utils.js';
+import {
+  isMobile,
+  portalSize,
+  latestMousePos,
+  moveScout,
+  getRandomPosition,
+  logoWrapper,
+} from './utils.js';
 
 const gameLevels = 3;
 const maxScale = 4;
@@ -37,7 +43,6 @@ export const updateCursor = (event) => {
     logo.style.transform = 'rotate(0deg)';
   }, 100);
 };
-
 
 export const handleMouse = (callback) => {
   mouseMoveListener = (e) => {
@@ -78,10 +83,10 @@ export const createPortal = () => {
   sparkle.classList.add('sparkle');
   sparkleContainer.appendChild(sparkle);
 
-  const maxX = window.innerWidth - portalSize;
-  const maxY = window.innerHeight - portalSize;
-  sparkleContainer.style.left = `${Math.floor(Math.random() * maxX)}px`;
-  sparkleContainer.style.top = `${Math.floor(Math.random() * maxY)}px`;
+  const { x, y } = getRandomPosition(portalSize, portalSize);
+
+  sparkleContainer.style.left = `${x}px`;
+  sparkleContainer.style.top = `${y}px`;
 
   game.appendChild(sparkleContainer);
   currentPortal = sparkleContainer;
@@ -149,11 +154,11 @@ export const destroyGrey = () => {
 
 export const moveGrey = () => {
   if (!greyActive) return;
-  const dx = latestMousePos.x - grey.offsetLeft;
-  const dy = latestMousePos.y - grey.offsetTop;
-  grey.style.left = `${grey.offsetLeft + dx * 0.2}px`;
-  grey.style.top = `${grey.offsetTop + dy * 0.2}px`;
-  const distance = Math.max(Math.sqrt(dx * dx + dy * dy), 1);
+  const deltaX = latestMousePos.x - grey.offsetLeft;
+  const deltaY = latestMousePos.y - grey.offsetTop;
+  grey.style.left = `${grey.offsetLeft + deltaX * 0.2}px`;
+  grey.style.top = `${grey.offsetTop + deltaY * 0.2}px`;
+  const distance = Math.max(Math.sqrt(deltaX * deltaX + deltaY * deltaY), 1);
 
   if (lastDistance !== null && distance < lastDistance) {
     currentGreyScale += 0.05;
